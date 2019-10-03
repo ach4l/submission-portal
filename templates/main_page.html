@@ -1,29 +1,36 @@
 <html>
     <head>
-        <title>My scratchboard page</title>
+        <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <title>Assignment 2 - Submission</title>
     </head>
-
     <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Assignment 2 Submission Portal</a>
+                </div>
+            </div>
+        </nav>
+<div class="container">
 
-        <div>
-            This is the first dummy comment.
-        </div>
+        <h1>Transform a file demo</h1>
 
-        <div>
-            This is the the second dummy comment.  It's no more interesting
-            than the first.
-        </div>
-
-        <div>
-            This is the third dummy comment.  It's actually quite exciting!
-        </div>
-
-        <div>
-            <form action="." method="POST">
-                <textarea name="contents" placeholder="Enter a comment"></textarea>
-                <input type="submit" value="Post comment">
-            </form>
-        </div>
-
+        <form action="/transform" method="post" enctype="multipart/form-data">
+            <p>Enter your Roll Number:</p>
+            <p><input name="roll_no"></p>
+            <input type="file" name="data_file" />
+            <input type="submit" />
+        </form>
+</div><!-- /.container -->
     </body>
 </html>
