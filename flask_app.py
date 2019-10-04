@@ -4,7 +4,8 @@
 from flask import Flask, make_response, request, render_template
 import io
 import csv
-#import pandas as pd
+import pandas as pd
+from processing import compare_csv
 
 app = Flask(__name__)
 
@@ -45,27 +46,7 @@ def transform_view():
 
     #print(csv_input)
 
-    error_count = 0
-    total_count = 0
-    ind = 0
-
-    for line in csv_input:
-        line2 = correct_csv[ind]
-        ind = ind + 1
-
-        total_count = total_count + 1
-        print(line)
-        print("Total Count : " +str(total_count))
-        print(line2)
-
-
-
-        if line != line2:
-            error_count = error_count + 1
-            print("Error Count : "+str(error_count))
-
-
-    accuracy = (total_count - error_count) / total_count * 100
+    accuracy = compare_csv(csv_input, correct_csv)
 
     with open('results_raw.csv','a') as fd:
         print("Writing :" + roll_no+"," + str(accuracy))
@@ -85,6 +66,14 @@ def transform_view():
             </body>
         </html>
     """.format(accuracy = accuracy)
+
+@app.route('/lb')
+def html_table():
+    df = pd.read_csv('results_raw.csv')
+
+    return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
+
+
 
 
 if __name__ == "__main__":
