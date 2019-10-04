@@ -16,6 +16,10 @@ def transform(text_file_contents):
 def form():
     return render_template("main_page.html")
 
+#@app.route("/login/", methods=["GET", "POST"])
+#def login():
+#    return render_template("login_page.html")
+
 @app.route('/transform', methods=["GET","POST"])
 def transform_view():
 
@@ -28,24 +32,40 @@ def transform_view():
         return "No file"
 
     stream = io.StringIO(f.stream.read().decode("UTF8"), newline=None)
-    csv_input = csv.reader(stream)
+    csv_input = list(csv.reader(stream))
     #print("file contents: ", file_contents)
     #print(type(file_contents))
+    with open('mysite/test.csv','r') as f:
+        correct_csv = list(csv.reader(f))
 
-    correct_csv = csv.reader("test.csv")
+    print(correct_csv)
+
+   #  file2_line = rdr2.next()
 
 
-    print(csv_input)
+    #print(csv_input)
 
     error_count = 0
     total_count = 0
+    ind = 0
 
     for line in csv_input:
-        total_count = total_count + 1
-        if line not in correct_csv:
-            error_count = error_count + 1
+        line2 = correct_csv[ind]
+        ind = ind + 1
 
-    accuracy = error_count / total_count * 100
+        total_count = total_count + 1
+        print(line)
+        print("Total Count : " +str(total_count))
+        print(line2)
+
+
+
+        if line != line2:
+            error_count = error_count + 1
+            print("Error Count : "+str(error_count))
+
+
+    accuracy = (total_count - error_count) / total_count * 100
 
     with open('results_raw.csv','a') as fd:
         print("Writing :" + roll_no+"," + str(accuracy))
