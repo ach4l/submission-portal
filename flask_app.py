@@ -49,8 +49,8 @@ def transform_view():
     accuracy = compare_csv(csv_input, correct_csv)
 
     with open('results_raw.csv','a') as fd:
-        print("Writing :" + roll_no+"," + str(accuracy))
-        fd.write(roll_no+"," + str(accuracy))
+        print("Writing :" + roll_no+"," + str(accuracy) + "\n")
+        fd.write(roll_no+"," + str(accuracy)+ "\r")
 
 
 
@@ -59,17 +59,20 @@ def transform_view():
 
     #response = make_response(result)
     #response.headers["Content-Disposition"] = "attachment; filename=result.csv"
-    return """
-        <html>
-            <body>
-                <h1>Accuracy is</h1> {accuracy}
-            </body>
-        </html>
-    """.format(accuracy = accuracy)
+
+    return render_template('accuracy_page.html', accuracy = accuracy)
+    #return """
+    #    <html>
+    #        <body>
+    #            <h3>Current Submission Accuracy is</h3> {accuracy}
+    #        </body>
+    #    </html>
+    #""".format(accuracy = accuracy)
 
 @app.route('/lb')
 def html_table():
     df = pd.read_csv('results_raw.csv')
+    df = df.sort_values(df.columns[1], ascending=False).drop_duplicates([df.columns[0]])
 
     return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
 
