@@ -73,7 +73,8 @@ def transform_view():
 def html_table():
     df = pd.read_csv('results_raw.csv')
     df = df.sort_values(df.columns[1], ascending=False).drop_duplicates([df.columns[0]])
-
+    df = df.reset_index()
+    del df['index']
     return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
 
 
