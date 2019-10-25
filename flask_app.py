@@ -36,7 +36,7 @@ def transform_view():
     csv_input = list(csv.reader(stream))
     #print("file contents: ", file_contents)
     #print(type(file_contents))
-    with open('mysite/test.csv','r') as f:
+    with open('mysite/correct_ans.csv','r') as f:
         correct_csv = list(csv.reader(f))
 
     print(correct_csv)
@@ -54,20 +54,40 @@ def transform_view():
 
 
 
+    # Plotting submission history
+    df = pd.read_csv('results_raw.csv')
+    df_roll = df.loc[df['Roll Number'] == roll_no]
+    acc_list = df_roll[' Accuracy'].values.tolist()
+    sub_no_list = range(1,len(acc_list)+1)
+    print(sub_no_list)
+
     #stream.seek(0)
     #result = transform(stream.read())
 
     #response = make_response(result)
     #response.headers["Content-Disposition"] = "attachment; filename=result.csv"
+    if accuracy <20:
+        message = "Ouch!! Worse than random guessing! Something went horribly wrong."
+    if accuracy >=20 and accuracy <39:
+        message = "Hey, better than Random guessing! If training accuracy was much better, you are overfitting."
+    if accuracy >=39 and accuracy <50:
+        message = "Just passing! If training accuracy was much better, you are overfitting."
+    if accuracy >=50 and accuracy <70:
+        message = "Some learning is happening. Try tuning the parameters better."
+    if accuracy >=70 and accuracy <80:
+        message = "Almost beating some really good people from best universities!"
+    if accuracy >=80 and accuracy <85:
+        message = "Congrats! Tune some more and soon you will be contributing to science!"
+    if accuracy >=85:
+        message = "Time to write that paper!!"
+    if accuracy >=85 and roll_no=='Apna Time Aayega':
+        message = "Apna time aayega? More like apna time AA GAYA!!"
+    if accuracy >=85 and roll_no=='SCAM':
+        message = "Whadda Scam!! Lets Scam science now!"
+    if accuracy >=85 and roll_no=='515':
+        message = "Aila GILLA!!"
 
-    return render_template('accuracy_page.html', accuracy = accuracy)
-    #return """
-    #    <html>
-    #        <body>
-    #            <h3>Current Submission Accuracy is</h3> {accuracy}
-    #        </body>
-    #    </html>
-    #""".format(accuracy = accuracy)
+    return render_template('accuracy_page.html', accuracy = accuracy, message = message, labels = sub_no_list, values = acc_list)
 
 @app.route('/lb')
 def html_table():
@@ -75,9 +95,17 @@ def html_table():
     df = df.sort_values(df.columns[1], ascending=False).drop_duplicates([df.columns[0]])
     df = df.reset_index()
     del df['index']
-    return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
+    return render_template('simple.html',  tables=[df.to_html(classes='data',
+                       bold_rows = True, border =2,
+                       col_space = 100,
+                       justify = 'center',
+                       na_rep =' ')], titles=df.columns.values)
 
-
+@app.route('/chart')
+def plot_history():
+    a = [1,2,3,4]
+    lab = ['a','b','c','d']
+    return render_template('chart.html', values = a, labels = lab)
 
 
 if __name__ == "__main__":

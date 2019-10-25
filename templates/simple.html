@@ -29,7 +29,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Submit Week 2                  </a>
+                    <a class="navbar-brand" href="/">Submit Week 2                  </a>
 
                         <a class="navbar-brand" href="/lb"><center><div class="mx-auto" style="width: 200px;">Leaderboard Week 2</div></center></a>
 
@@ -50,10 +50,11 @@
 
 <div class=container style="text-align:center" align="center" >
   <center><h1>Leaderboard</h1></center>
+  <h4>
   {% for table in tables %}
-    <center><h2>{{titles[loop.index]}}</h2></center>
-    <center>{{ table|safe }}</center>
+    <center>{{ table |safe }}</center>
   {% endfor %}
+  </h4>
 </div><!-- /.container -->
 </body>
 </html>
