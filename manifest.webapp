@@ -1,0 +1,16 @@
+{
+  "name": "My App",
+  "description": "My elevator pitch goes here",
+  "cursor" : false
+  "launch_path": "/landing.html",
+  "icons": {
+    "512": "/img/icon-512.png",
+    "128": "/img/icon-128.png"
+  },
+  "developer": {
+    "name": "Your name or organization",
+    "url": "http://your-homepage-here.org"
+  },
+  "default_locale": "en",
+  "chrome": { "navigation": true }
+}

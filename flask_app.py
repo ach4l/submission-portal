@@ -9,8 +9,15 @@ from processing import compare_csv
 
 app = Flask(__name__)
 
+
+@app.route('/cacheon')
+def landing():
+    return render_template("landing.html")
+
 def transform(text_file_contents):
     return text_file_contents.replace("=", ",")
+
+
 
 
 @app.route('/')
@@ -86,8 +93,12 @@ def transform_view():
         message = "Whadda Scam!! Lets Scam science now!"
     if accuracy >=85 and roll_no=='515':
         message = "Aila GILLA!!"
+    if accuracy >=85 and roll_no=='Apna time aa raha hai':
+        message = "Kaun Bola - 'Mujhse na ho payega!'? KAUN BOLA?"
+    if accuracy >=85 and roll_no=='':
+        message = "Shine on you Nameless Diamond!"
 
-    return render_template('accuracy_page.html', accuracy = accuracy, message = message, labels = sub_no_list, values = acc_list)
+    return render_template('accuracy_page.html', accuracy = accuracy, message = message, labels = sub_no_list, values = acc_list,title='Your Submission History', max=100)
 
 @app.route('/lb')
 def html_table():
@@ -105,7 +116,7 @@ def html_table():
 def plot_history():
     a = [1,2,3,4]
     lab = ['a','b','c','d']
-    return render_template('chart.html', values = a, labels = lab)
+    return render_template('bar_chart.html',title='Bitcoin Monthly Price in USD', max=5, values = a, labels = lab)
 
 
 if __name__ == "__main__":

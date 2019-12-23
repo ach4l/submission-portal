@@ -1,0 +1,55 @@
+<html>
+
+    <link rel="stylesheet" href="/static/testing.css" >
+
+<div class="grid">
+
+    <div tabindex="1" class="module" autofocus>Youtube</div>
+    <div tabindex="2" class="module">Wikitravel</div>
+    <div tabindex="3" class="module">Google</div>
+    <div tabindex="4" class="module">Weather</div>
+
+</div>
+
+
+<script>
+    youtubeElement =  document.querySelector('.module')
+    youtubeElement.focus()
+    var lastActiveElement = document.activeElement;
+    console.log(youtubeElement);
+    var currentActiveElement = document.activeElement;
+    console.log(lastActiveElement);
+
+    youtubeElement.addEventListener('keydown', handleKeydown);
+
+    function handleKeydown(e) {
+  switch(e.key) {
+    case 'ArrowUp':
+      nav(-1);
+      break;
+    case 'ArrowDown':
+      nav(1);
+      break;
+    case 'ArrowRight':
+      nav(1);
+      break;
+    case 'ArrowLeft':
+      nav(-1);
+      break;
+  }
+}
+
+function nav (move) {
+  const currentIndex = document.activeElement.tabIndex;
+  const next = currentIndex + move;
+  const items = document.querySelectorAll('.module');
+  const targetElement = items[next];
+  targetElement.focus();
+}
+
+
+
+</script>
+
+
+</html>

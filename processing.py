@@ -3,7 +3,7 @@ def do_calculation(number1, number2):
 
 def compare_csv(csv_input,correct_csv):
     error_count = 0
-    total_count = 0
+    total_count = -1
     ind = 0
 
     for line in csv_input:
@@ -18,5 +18,6 @@ def compare_csv(csv_input,correct_csv):
         if line != line2:
             error_count = error_count + 1
             #print("Error Count : "+str(error_count))
+
     accuracy = (total_count - error_count) / total_count * 100
     return accuracy
